@@ -38,16 +38,14 @@ public class AirportService {
         double duration =Double.MAX_VALUE;
         HashMap<Integer,Flight> flightDb=airportRepository.getAllFlights();
         for(Flight flight : flightDb.values()){
+            if(!flight.getFromCity().equals(fromCity) || !flight.getToCity().equals(toCity)){
+                return -1;
+            }
             if((flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity)) && flight.getDuration()<duration){
                 duration=flight.getDuration();
             }
         }
-        if(duration>0){
-            return duration;
-        }
-        else{
-            return -1;
-        }
+        return duration;
     }
     //4. Get no of people on airport on date
     public int getNumberOfPeopleOn(Date date,String airportName){
